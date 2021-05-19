@@ -1,0 +1,24 @@
+// Works with Gradle 6.3 and Java 14
+
+// To run this do:
+// ./gradlew run
+
+// To build a distribution zip:
+// ./gradlew distZip
+
+plugins {
+    id 'java'
+}
+
+sourceCompatibility = 7
+targetCompatibility = 7
+
+version = '0.0.1'
+
+jar {
+
+	//Include the dependency libraries in the .jar
+	//from {
+	//	configurations.extraLibs.collect { it.isDirectory() ? it : zipTree(it) }
+	//}
+}
