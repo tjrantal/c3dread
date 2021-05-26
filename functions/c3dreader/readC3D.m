@@ -36,13 +36,16 @@ function data = readC3D(c3dFile)
     data.header.string = header.toString.toCharArray'; 
     
     %Get events
-    data.events = struct();
-    data.events.labels = handleStringArray(events.labels); %Labels;
-    data.events.descriptions= handleStringArray(events.descriptions); %Descriptions
-    data.events.contexts = handleStringArray(events.contexts); %Event contexts (left/right)
-    data.events.times = events.times;   %Event times
-    data.events.frames = floor(events.times.*header.trajectorySampleRate)+1;   %Event frames
-    
+	try
+		data.events = struct();
+		data.events.labels = handleStringArray(events.labels); %Labels;
+		data.events.descriptions= handleStringArray(events.descriptions); %Descriptions
+		data.events.contexts = handleStringArray(events.contexts); %Event contexts (left/right)
+		data.events.times = events.times;   %Event times
+		data.events.frames = floor(events.times.*header.trajectorySampleRate)+1;   %Event frames
+	catch
+		%No event parameter
+	end
     
     %Header events, not implemented
 %     eventLabels = {};

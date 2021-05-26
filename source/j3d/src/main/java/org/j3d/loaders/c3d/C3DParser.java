@@ -21,6 +21,9 @@ import org.j3d.util.DefaultErrorReporter;
 import org.j3d.util.ErrorReporter;
 import org.j3d.util.IntHashMap;
 
+//Debugging
+import java.io.FileInputStream;
+
 /**
  * A low-level parser for the C3D file format.
  * <p>
@@ -37,6 +40,16 @@ import org.j3d.util.IntHashMap;
  */
 public class C3DParser
 {
+	
+	/**TESTING
+	java -cp ".;build/libs/j3d-0.0.1.jar" org.j3d.loaders.c3d.C3DParser "../../data/5102_1mw_post1_Set02_01.c3d"
+	*/
+public static void main(String[] a){
+	try{
+		(new C3DParser(new FileInputStream(a[0]))).parse(true);
+	}catch(Exception e){System.out.println(e.toString());}
+}
+	
     /** Message when the 2nd byte is not 0x50. */
     private static final String INVALID_FILE_FORMAT =
         "The stream does not represent a C3D file. The binary ID is incorrect";
@@ -718,9 +731,9 @@ public class C3DParser
 			
 			
 			
-			for (int e = 0;e<eventLabels.length;++e){
+			//for (int e = 0;e<eventLabels.length;++e){
 				//System.out.println(String.format("%.03f\t%s\t%s\t%s",eventTimes[e],eventContexts[e].toString(),eventLabels[e].toString(),eventDescriptions[e].toString()));
-			}
+			//}
 			
 			/*
 			C3DParameter[] params = grp.getParameters();
@@ -1379,9 +1392,13 @@ public class C3DParser
 
             case 2:
                 float[][] sd2 = new float[d[1]][d[0]];
-                for(int i = 0; i < d[1]; i++)
-                    for(int j = 0; j < d[0]; j++)
-                        sd2[i][j] = reader.readFloat(offset + 4 * i * j);
+                for(int i = 0; i < d[1]; i++){
+                    for(int j = 0; j < d[0]; j++){
+						//Modified by Timo Rantalainen 2021.05.26
+                        //sd2[i][j] = reader.readFloat(offset + 4 * i * j);
+						sd2[i][j] = reader.readFloat(offset + d[0]*4 * i + j*4);
+					}
+				}
 
                 offset += d[0] * d[1] * 4;
                 param.setValue(sd2, d);
