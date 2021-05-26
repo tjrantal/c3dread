@@ -14,7 +14,6 @@ datapath = 'data/'; %Look for any c3d files in this folder
 fList = getFilesAndFolders([datapath '*.c3d']);
 for f = fList'
     data = readC3D([datapath f.name]);  %Read the c3d file
-    keyboard;
     frameIndices = [data.header.start3DFrame:data.header.end3DFrame]+1;
     
     
